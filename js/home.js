@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!userNmae) {//未登录，请登录
         alert("非法访问,请登录！");
-        window.location.href = 'index.html';
+        window.location.href = 'https://12trust.github.io/knowledge/index.html';
     }
 
     //调用获取标签内容
