@@ -1,0 +1,44 @@
+{
+    "menu": [
+        {
+            "id": 1,
+            "type": "tripod",
+            "content": "三脚架概述"
+        },
+        {
+            "id": 2,
+            "type": "tripod",
+            "content": "三脚架话术"
+        },
+        {
+            "id": 3,
+            "type": "tripod",
+            "content": "三脚架图片"
+        },
+        {
+            "id": 4,
+            "type": "washer",
+            "content":"洗衣机概述"
+        },
+        {
+            "id": 5,
+            "type": "washer",
+            "content": "洗衣机话术"
+        },
+        {
+            "id": 6,
+            "type": "washer",
+            "content": "洗衣机图片"
+        },
+        {
+            "id": 7,
+            "type": "tripod",
+            "content": "三脚架成本"
+        },
+        {
+            "id": 8,
+            "type": "washer",
+            "content": "洗衣机成本"
+        }
+    ]
+}

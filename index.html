@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>知识库--用户登录</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="./lib/bootstrap-4.6.2-dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <script src="./js/jquery.slim.min.js"></script>
+  <script src="./lib/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./js/jquery.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#165DFF',
+            secondary: '#4080FF',
+            neutral: {
+              100: '#F5F7FA',
+              200: '#E5E6EB',
+              300: '#C9CDD4',
+              400: '#86909C',
+              500: '#4E5969',
+              600: '#272E3B',
+              700: '#1D2129',
+            }
+          },
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .form-focus {
+        @apply focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none;
+      }
+      .btn-hover {
+        @apply hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300;
+      }
+    }
+  </style>
+</head>
+
+<body 
+  class="font-inter bg-gradient-to-br from-neutral-100 to-neutral-200 min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl">
+      <!-- 顶部装饰条 -->
+      <div class="h-2 bg-gradient-to-r from-primary to-secondary"></div>
+
+      <!-- 登录表单 -->
+      <div class="p-8">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fa-solid fa-user-circle text-primary text-3xl"></i>
+          </div>
+          <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-neutral-700">用户登录</h2>
+          <p class="text-neutral-400 mt-2">欢迎回来，请登录您的账户</p>
+        </div>
+
+        <form id="loginForm" class="space-y-5">
+          <!-- 用户名 -->
+          <div class="form-group relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <i class="fa-solid fa-user text-neutral-400"></i>
+            </div>
+            <input type="text" id="username" name="username"
+              class="form-control w-full pl-10 pr-4 py-3 rounded-lg border border-neutral-200 bg-neutral-50 text-neutral-700 form-focus transition-all duration-300"
+              placeholder="请输入用户名" required>
+            <div class="invalid-feedback text-sm text-red-500 mt-1">
+              用户名不能为空
+            </div>
+          </div>
+
+          <!-- 密码 -->
+          <div class="form-group relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <i class="fa-solid fa-lock text-neutral-400"></i>
+            </div>
+            <input type="password" id="password" name="password"
+              class="form-control w-full pl-10 pr-10 py-3 rounded-lg border border-neutral-200 bg-neutral-50 text-neutral-700 form-focus transition-all duration-300"
+              placeholder="请输入密码" required>
+            <button type="button" id="togglePassword"
+              class="absolute inset-y-0 right-0 flex items-center pr-3 text-neutral-400 hover:text-neutral-600 transition-colors">
+              <i class="fa-solid fa-eye-slash"></i>
+            </button>
+            <div class="invalid-feedback text-sm text-red-500 mt-1">
+              密码不能为空
+            </div>
+          </div>
+
+          <!-- 记住我和忘记密码 -->
+          <div class="d-flex justify-between align-items-center">
+            <div class="form-check">
+              <input type="checkbox" id="remember"
+                class="form-check-input w-4 h-4 text-primary border-neutral-300 rounded focus:ring-primary/30">
+              <label for="remember" class="form-check-label ml-2 text-sm text-neutral-500">记住我</label>
+            </div>
+            <a href="#" class="text-sm text-primary hover:text-primary/80 transition-colors">忘记密码?</a>
+          </div>
+
+          <!-- 登录按钮 -->
+          <button type="submit"
+            class="w-full py-3 px-4 bg-primary text-white rounded-lg font-medium shadow-md btn-hover">
+            <i class="fa-solid fa-sign-in-alt mr-2"></i>登录
+          </button>
+        </form>
+
+        <!-- 分隔线 -->
+        <div class="my-6 relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-neutral-200"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white text-neutral-400"></span>
+          </div>
+        </div>
+
+        <!-- 社交登录 -->
+        <!-- <div class="grid grid-cols-3 gap-4">
+          <button type="button" class="flex items-center justify-center py-2 border border-neutral-200 rounded-lg text-neutral-600 hover:bg-neutral-50 transition-colors">
+            <i class="fa-brands fa-weixin text-xl"></i>
+          </button>
+          <button type="button" class="flex items-center justify-center py-2 border border-neutral-200 rounded-lg text-neutral-600 hover:bg-neutral-50 transition-colors">
+            <i class="fa-brands fa-qq text-xl"></i>
+          </button>
+          <button type="button" class="flex items-center justify-center py-2 border border-neutral-200 rounded-lg text-neutral-600 hover:bg-neutral-50 transition-colors">
+            <i class="fa-brands fa-github text-xl"></i>
+          </button>
+        </div>
+         -->
+        <!-- 注册链接 -->
+        <div class="mt-6 text-center">
+          <p class="text-sm text-neutral-500">
+            还没有账户? <a href="#" class="text-primary font-medium hover:text-primary/80 transition-colors">立即注册</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 页脚 -->
+    <p class="text-center text-neutral-400 text-sm mt-6">
+      &copy; 版本：V1 <br /> 版权归微信账号：source_cloud所有 <br /> 2025-2026
+    </p>
+  </div>
+
+  <script>
+    // 表单验证
+    const loginForm = document.getElementById('loginForm');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+
+    loginForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      let isValid = true;
+
+      // 验证用户名
+      if (!usernameInput.value.trim()) {
+        usernameInput.classList.add('border-red-500');
+        usernameInput.nextElementSibling.classList.add('d-block');
+        isValid = false;
+      } else {
+        usernameInput.classList.remove('border-red-500');
+        usernameInput.nextElementSibling.classList.remove('d-block');
+      }
+
+      // 验证密码
+      if (!passwordInput.value.trim()) {
+        passwordInput.classList.add('border-red-500');
+        passwordInput.nextElementSibling.classList.add('d-block');
+        isValid = false;
+      } else {
+        passwordInput.classList.remove('border-red-500');
+        passwordInput.nextElementSibling.classList.remove('d-block');
+      }
+
+      // 如果验证通过，可以提交表单或执行其他操作
+      if (isValid) {
+        // 模拟登录成功的效果
+        const submitButton = loginForm.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>登录中...';
+
+        //登录校验
+        $.getJSON("json/user.json", function (data) {
+          if (data.username === usernameInput.value && data.password === passwordInput.value) {
+            // 登录成功
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<i class="fa-solid fa-sign-in-alt mr-2"></i>登录';
+            //存储数据到会话中
+            localStorage.setItem('user', username);
+            //跳转页面
+            window.location.href = 'home.html';
+          } else {
+            //登录失败
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<i class="fa-solid fa-sign-in-alt mr-2"></i>登录';
+            alert("请检查您输入的用户名或密码是否正确！");
+            return;
+          }
+        });
+      }
+    });
+
+    // 密码可见性切换
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordField = document.getElementById('password');
+
+    togglePassword.addEventListener('click', function () {
+      const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordField.setAttribute('type', type);
+
+      // 切换图标
+      const icon = togglePassword.querySelector('i');
+      if (type === 'text') {
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      } else {
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      }
+    });
+
+    // 添加动画效果
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('focus', function () {
+        this.parentElement.classList.add('scale-[1.01]');
+        this.parentElement.style.transition = 'transform 0.3s ease';
+      });
+
+      input.addEventListener('blur', function () {
+        this.parentElement.classList.remove('scale-[1.01]');
+      });
+    });
+  </script>
+</body>
+
+</html>

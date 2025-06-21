@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>知识库--首页</title>
+    <!-- 引入依赖 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="./lib/bootstrap-4.6.2-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <script src="./js/jquery.slim.min.js"></script>
+    <script src="./lib/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/home.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/common.js"></script>
+    <style>
+        :root {
+            --primary: #165DFF;
+            --secondary: #4080FF;
+            --neutral-100: #F5F7FA;
+            --neutral-200: #E5E6EB;
+            --neutral-300: #C9CDD4;
+            --neutral-400: #86909C;
+            --neutral-500: #4E5969;
+            --neutral-600: #272E3B;
+            --neutral-700: #1D2129;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #fff;
+        }
+
+        body,
+        html {
+            height: 100%;
+            position: relative;
+        }
+
+        /* 标签导航样式 */
+        .tag-nav {
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--neutral-200);
+        }
+
+        .tag-item {
+            display: inline-block;
+            margin-right: 8px;
+            padding: 6px 12px;
+            border-radius: 16px;
+            background-color: var(--neutral-100);
+            color: var(--neutral-600);
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .tag-item.active,
+        .tag-item:hover {
+            background-color: var(--primary);
+            color: #fff;
+        }
+
+        /* 内容区域样式 */
+        .content-section {
+            padding: 16px;
+        }
+
+        .text-content {
+            line-height: 1.6;
+            color: var(--neutral-600);
+            margin-bottom: 16px;
+            background-color: beige;
+            padding: 8px 10px;
+            border-radius: 8px;
+        }
+
+        /* 图片网格样式 */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .image-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            aspect-ratio: 1/1;
+        }
+
+        .image-item img {
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        img {
+            border-radius: 10px;
+            width: 200px !important;
+            height: 210px !important;
+        }
+
+        .image-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* 图片模态框样式 */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        /* 加载动画 */
+        .loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(22, 93, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        h2 {
+            text-align: center;
+            font-weight: bold;
+            padding: 8px 10px;
+            text-decoration: underline rgb(139, 211, 139) 2px;
+        }
+
+        .search {
+            text-align: center;
+            padding: 10px;
+        }
+        .search input{
+            border: #4080FF 1px solid;
+            outline: none;
+            padding:5px;
+        }
+        .search button{
+            position: relative;
+            right: 5px;
+            background-color: #4080FF;
+            padding: 6px 8px;
+            border-radius: 0 5px 5px 0;
+            color: white;
+        }
+        .bigc{
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* 页脚 */
+        .footed {
+            padding: 5px 0;
+            width: 100%;
+            background-color: #E5E6EB;
+            position: fixed;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 顶部标签导航 -->
+    <div id="loading" class="tag-nav">
+        <div id="tags-container" class="px-4">
+            <!-- 标签将通过JavaScript动态加载 -->
+            <div class="loader">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 搜索栏 -->
+    <div class="search" id="search">
+        <input type="text" id="msg" placeholder="请输入您要搜索的内容">
+        <button type="button" id="buttContent">搜索</button>
+    </div>
+
+    <!-- 文本内容区域 -->
+    <div class="content-section" id="showHide">
+        <h2 class="font-weight-bold" id="title"></h2>
+        <div id="text-container">
+            <!-- 文本内容将通过JavaScript动态加载 -->
+            <div class="loader">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图片展示区域 -->
+    <div class="content-section" id="contentImg">
+        <h2 class="font-weight-bold text-neutral-700 mb-3" id="titleImg"></h2>
+        <div id="images-container" class="image-grid">
+            <!-- 图片将通过JavaScript动态加载 -->
+            <div class="loader col-span-2">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+    <div style="height: 30px;"></div>
+    <div class="footed">
+        <!-- 页脚 -->
+        <p class="text-center text-neutral-400 text-sm">
+            &copy; 版本：V1; 2025-2026<br /> 版权归微信账号：source_cloud所有
+        </p>
+    </div>
+
+    <!-- 图片模态框 -->
+    <div id="imageModal" class="image-modal">
+        <span class="close-btn" id="closeModal">&times;</span>
+        <img id="modalImage" class="modal-content" src="" alt="大图展示">
+    </div>
+
+</body>
+
+</html>
